@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dragon Ball Z — Kamehameha</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      background: #000;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      overflow: hidden;
+      font-family: 'Segoe UI', sans-serif;
+    }
+
+    canvas {
+      max-width: 100%;
+      max-height: 100vh;
+      display: block;
+    }
+
+    /* Hidden media elements */
+    #webcam, #energy, #kame { display: none; }
+
+    /* Loading overlay */
+    #loading {
+      position: fixed;
+      inset: 0;
+      background: #000;
+      color: #fff;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      justify-content: center;
+      align-items: center;
+      z-index: 10;
+    }
+    #loading.hidden { display: none; }
+    #loading h1 { font-size: 1.5rem; letter-spacing: 0.1em; }
+    #loading p  { font-size: 0.9rem; color: #aaa; }
+
+    /* Spinner */
+    .spinner {
+      width: 40px; height: 40px;
+      border: 4px solid #333;
+      border-top-color: #ff9900;
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* State badge */
+    #badge {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      padding: 6px 18px;
+      border-radius: 999px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity 0.3s, background 0.3s;
+    }
+    #badge.show   { opacity: 1; }
+    #badge.CHARGING { background: #1a90ff; color: #fff; }
+    #badge.FIRING   { background: #ff4400; color: #fff; }
+  </style>
+</head>
+<body>
+
+  <div id="loading">
+    <div class="spinner"></div>
+    <h1>Loading…</h1>
+    <p id="loading-msg">Initialising pose model (first load may take ~10 s)</p>
+  </div>
+
+  <canvas id="canvas"></canvas>
+
+  <!-- Hidden media -->
+  <video id="webcam" autoplay playsinline muted></video>
+  <video id="energy" src="/static/assets/energy.mp4"       muted loop preload="auto"></video>
+  <video id="kame"   src="/static/assets/kamehameha.mp4"   muted loop preload="auto"></video>
+
+  <div id="badge"></div>
+
+  <script type="module" src="/static/main.js"></script>
+</body>
+</html>
