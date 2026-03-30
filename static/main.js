@@ -93,11 +93,8 @@ async function init() {
   loadingEl.classList.add('hidden');
 
   // 3. Start render loop
-  let lastT = -1;
-  function loop(now) {
-    // Only re-run detection when there's a new video frame
-    if (webcam.currentTime !== lastT) {
-      lastT = webcam.currentTime;
+ function loop(now) {
+    if (webcam.readyState >= 2) {
       render(landmarker, now);
     }
     requestAnimationFrame(loop);
